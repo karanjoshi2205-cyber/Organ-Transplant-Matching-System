@@ -163,7 +163,8 @@ public:
     }
 }
 ;
-/* =========================================================                      DONOR LINKED LIST    ========================================================= */ class DonorNode {
+/* =========================================================                      DONOR LINKED LIST    ========================================================= */ 
+class DonorNode {
 public:
     Donor data;
     DonorNode* next;
@@ -243,7 +244,8 @@ public:
     }
 }
 ;
-/* =========================================================                     RECIPIENT LINKED LIST    ========================================================= */ class RecipientNode {
+/* =========================================================                     RECIPIENT LINKED LIST    ========================================================= */ 
+class RecipientNode {
 public:
     Recipient data;
     RecipientNode* next;
@@ -323,7 +325,8 @@ public:
     }
 }
 ;
-/* =========================================================                          HASH TABLE    Custom HashMap: ID -> Donor/Recipient    ========================================================= */ const int HASH_SIZE = 101;
+/* =========================================================                          HASH TABLE    Custom HashMap: ID -> Donor/Recipient    ========================================================= */ 
+const int HASH_SIZE = 101;
 class DonorHashTable {
 private:
     Donor* table[HASH_SIZE];
@@ -333,9 +336,7 @@ private:
     }
 public:
     DonorHashTable() {
-        for (int i = 0;
-        i < HASH_SIZE;
-        i++) {
+        for (int i = 0;i < HASH_SIZE;i++) {
             table[i] = NULL;
             occupied[i] = false;
         }
@@ -357,9 +358,7 @@ public:
     }
     Donor* search(int id) {
         int index = hashFunction(id);
-        for (int i = 0;
-        i < HASH_SIZE;
-        i++) {
+        for (int i = 0; i < HASH_SIZE; i++) {
             int pos = (index + i) % HASH_SIZE;
             if (!occupied[pos]) return NULL;
             if (table[pos]->getID() == id) return table[pos];
@@ -462,7 +461,8 @@ public:
     }
 }
 ;
-/* =========================================================                            HOSPITAL    ========================================================= */ class Hospital {
+/* =========================================================                            HOSPITAL    ========================================================= */
+class Hospital {
 private:
     int id;
     string name;
@@ -495,7 +495,8 @@ public:
     }
 }
 ;
-/* =========================================================                      HOSPITAL ARRAY    ========================================================= */ const int MAX_HOSPITALS = 50;
+/* =========================================================                      HOSPITAL ARRAY    ========================================================= */ 
+const int MAX_HOSPITALS = 50;
 class HospitalManager {
 private:
     Hospital hospitals[MAX_HOSPITALS];
@@ -511,9 +512,7 @@ public:
         return true;
     }
     Hospital* search(int id) {
-        for (int i = 0;
-        i < count;
-        i++) {
+        for (int i = 0 ;i < count; i++) {
             if (hospitals[i].getID() == id) return &hospitals[i];
         }
         return NULL;
@@ -523,16 +522,15 @@ public:
             cout << "\nNo hospitals registered.\n";
             return;
         }
-        for (int i = 0;
-        i < count;
-        i++) hospitals[i].display();
+        for (int i = 0; i < count; i++) hospitals[i].display();
     }
     int size() {
         return count;
     }
 }
 ;
-/* =========================================================                        REQUEST + QUEUE    ========================================================= */ class Request {
+/* =========================================================                        REQUEST + QUEUE    ========================================================= */ 
+class Request {
 private:
     int requestID;
     int donorID;
@@ -621,7 +619,8 @@ public:
     }
 }
 ;
-/* =========================================================                  PRIORITY QUEUE - MAX HEAP    ========================================================= */ struct PriorityItem {
+/* =========================================================                  PRIORITY QUEUE - MAX HEAP    ========================================================= */ 
+struct PriorityItem {
     int recipientID;
     int priority;
 }
@@ -679,7 +678,9 @@ public:
     }
 }
 ;
-/* =========================================================                      GRAPH    Adjacency Matrix    ========================================================= */ /* =========================================================                   MAIN SYSTEM CLASS    ========================================================= */ class OrganTransplantSystem {
+/* =========================================================                      GRAPH    Adjacency Matrix    ========================================================= */ 
+/* =========================================================                   MAIN SYSTEM CLASS    ========================================================= */
+class OrganTransplantSystem {
 private:
     DonorList donorList;
     RecipientList recipientList;
@@ -773,7 +774,8 @@ public:
         if (!sizeCompatible(d.getSize(), r.getSize())) return false;
         return true;
     }
-    /* ---------------- HOSPITAL ---------------- */ void registerHospital() {
+    /* ---------------- HOSPITAL ---------------- */ 
+    void registerHospital() {
         int id;
         cout << "\nHospital ID: ";
         cin >> id;
@@ -814,7 +816,8 @@ public:
         cout << "\nWelcome " << h->getName() << "!\n";
         hospitalMenu();
     }
-    /* ---------------- DONOR ---------------- */ void addDonor() {
+    /* ---------------- DONOR ---------------- */ 
+    void addDonor() {
         int id;
         cout << "\nDonor ID: ";
         cin >> id;
@@ -898,7 +901,8 @@ public:
         donorList.remove(id);
         cout << "Donor deleted.\n";
     }
-    /* ---------------- RECIPIENT ---------------- */ void addRecipient() {
+    /* ---------------- RECIPIENT ---------------- */ 
+    void addRecipient() {
         int id;
         cout << "\nRecipient ID: ";
         cin >> id;
@@ -985,7 +989,8 @@ public:
         recipientList.remove(id);
         cout << "Recipient deleted.\n";
     }
-    /* ---------------- ELIGIBILITY ---------------- */ void findEligible() {
+    /* ---------------- ELIGIBILITY ---------------- */ 
+    void findEligible() {
         int recipientID;
         cout << "\nRecipient ID: ";
         cin >> recipientID;
@@ -1008,7 +1013,8 @@ public:
         if (found == 0) cout << "\nNo eligible donor found.\n";
         else cout << "\nTotal eligible donors: " << found << '\n';
     }
-    /* ---------------- REQUEST ---------------- */ void createRequest() {
+    /* ---------------- REQUEST ---------------- */ 
+    void createRequest() {
         int donorID, recipientID;
         int fromHospital, toHospital;
         cout << "\nDonor ID: ";
@@ -1090,7 +1096,8 @@ public:
             }
         }
     }
-    /* ---------------- PRIORITY QUEUE ---------------- */ void nextPriorityRecipient() {
+    /* ---------------- PRIORITY QUEUE ---------------- */
+    void nextPriorityRecipient() {
         while (!priorityQueue.empty()) {
             PriorityItem item = priorityQueue.pop();
             Recipient* r = recipientHash.search(item.recipientID);
@@ -1102,7 +1109,8 @@ public:
         }
         cout << "\nPriority queue empty.\n";
     }
-    /* ---------------- STATISTICS ---------------- */ void statistics() {
+    /* ---------------- STATISTICS ---------------- */ 
+    void statistics() {
         int available = 0;
         DonorNode* d = donorList.getHead();
         while (d != NULL) {
