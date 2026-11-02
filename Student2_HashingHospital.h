@@ -171,3 +171,123 @@ public:
         return false;
     }
 };
+
+/* =========================================================
+                           HOSPITAL
+   ========================================================= */
+
+class Hospital
+{
+private:
+    int id;
+    string name;
+    string location;
+    string password;
+
+public:
+    Hospital()
+    {
+        id = 0;
+    }
+
+    Hospital(int id, string name, string location, string password)
+    {
+        this->id = id;
+        this->name = name;
+        this->location = location;
+        this->password = password;
+    }
+
+    int getID() const
+    {
+        return id;
+    }
+
+    string getName() const
+    {
+        return name;
+    }
+
+    string getLocation() const { return location; }
+    string getPasswordForFile() const { return password; }
+
+    bool checkPassword(string p)
+    {
+        return p == password;
+    }
+
+    void display()
+    {
+        cout << "\nHospital ID : " << id;
+        cout << "\nName        : " << name;
+        cout << "\nLocation    : " << location;
+        cout << "\n-------------------------\n";
+    }
+};
+
+/* =========================================================
+                     HOSPITAL ARRAY
+   ========================================================= */
+
+const int MAX_HOSPITALS = 50;
+
+class HospitalManager
+{
+private:
+    Hospital hospitals[MAX_HOSPITALS];
+    int count;
+
+public:
+    HospitalManager()
+    {
+        count = 0;
+    }
+
+    bool add(Hospital h)
+    {
+        if (count == MAX_HOSPITALS)
+            return false;
+
+        if (search(h.getID()) != NULL)
+            return false;
+
+        hospitals[count++] = h;
+        return true;
+    }
+
+    Hospital* search(int id)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (hospitals[i].getID() == id)
+                return &hospitals[i];
+        }
+
+        return NULL;
+    }
+
+    void display()
+    {
+        if (count == 0)
+        {
+            cout << "\nNo hospitals registered.\n";
+            return;
+        }
+
+        for (int i = 0; i < count; i++)
+            hospitals[i].display();
+    }
+
+    int size()
+    {
+        return count;
+    }
+
+    Hospital* getAt(int index)
+    {
+        if (index < 0 || index >= count) return NULL;
+        return &hospitals[index];
+    }
+};
+
+
