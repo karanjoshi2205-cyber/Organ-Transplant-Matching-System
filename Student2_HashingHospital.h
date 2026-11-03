@@ -289,5 +289,92 @@ public:
         return &hospitals[index];
     }
 };
+/* =========================================================
+             STUDENT 2: HOSPITAL GRAPH (ADJACENCY MATRIX)
+   ========================================================= */
+class HospitalGraph
+{
+private:
+    int hospitalIDs[MAX_HOSPITALS];
+    int adj[MAX_HOSPITALS][MAX_HOSPITALS];
+    int count;
 
+    int findIndex(int id) const
+    {
+        for (int i = 0; i < count; i++)
+            if (hospitalIDs[i] == id) return i;
+        return -1;
+    }
+
+public:
+    HospitalGraph()
+    {
+        count = 0;
+        for (int i = 0; i < MAX_HOSPITALS; i++)
+            for (int j = 0; j < MAX_HOSPITALS; j++) adj[i][j] = 0;
+    }
+
+    void addHospital(int id)
+    {
+        if (findIndex(id) != -1 || count >= MAX_HOSPITALS) return;
+        hospitalIDs[count++] = id;
+    }
+
+    void addConnection(int id1, int id2)
+    {
+        int a = findIndex(id1), b = findIndex(id2);
+        if (a == -1 || b == -1)
+        {
+            cout << "Register both hospitals before connecting them.\n";
+            return;
+        }
+        if (a == b)
+        {
+            cout << "A hospital cannot be connected to itself.\n";
+            return;
+        }
+        adj[a][b] = adj[b][a] = 1;
+        cout << "Hospital connection added.\n";
+    }
+
+    void displayGraph() const
+    {
+        if (count == 0) { cout << "No hospitals in graph yet.\n"; return; }
+        cout << "\nAdjacency Matrix (hospital IDs across top and side):\n    ";
+        for (int i = 0; i < count; i++) cout << hospitalIDs[i] << " ";
+        cout << "\n";
+        for (int i = 0; i < count; i++)
+        {
+            cout << hospitalIDs[i] << "  ";
+            for (int j = 0; j < count; j++) cout << adj[i][j] << "  ";
+            cout << "\n";
+        }
+    }
+
+    int getCount() const { return count; }
+    int getHospitalIDAt(int index) const { return (index >= 0 && index < count) ? hospitalIDs[index] : -1; }
+    bool isConnected(int i, int j) const { return i >= 0 && j >= 0 && i < count && j < count && adj[i][j] == 1; }
+
+    void BFS(int startID) const
+    {
+        int start = findIndex(startID);
+        if (start == -1) { cout << "Hospital ID not found in graph.\n"; return; }
+        bool visited[MAX_HOSPITALS] = {false};
+        int q[MAX_HOSPITALS], front = 0, rear = 0;
+        visited[start] = true;
+        q[rear++] = start;
+        cout << "BFS traversal: ";
+        while (front < rear)
+        {
+            int u = q[front++];
+            cout << hospitalIDs[u] << " ";
+            for (int v = 0; v < count; v++)
+                if (adj[u][v] == 1 && !visited[v])
+                { visited[v] = true; q[rear++] = v; }
+        }
+        cout << "\n";
+    }
+};
+
+#endif
 
