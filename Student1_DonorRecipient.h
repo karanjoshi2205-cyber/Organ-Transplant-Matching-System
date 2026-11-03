@@ -148,3 +148,99 @@ public:
         cout << "--------------------------------\n";
     }
 };
+class Recipient : public Person
+{
+private:
+    string organ;
+    string size;
+    string blood;
+    int priority;
+
+public:
+    Recipient()
+    {
+        priority = 3;
+    }
+
+    Recipient(int id, string name, char gender, int age,
+              string phone, string address,
+              string organ, string size, string blood,
+              int priority)
+        : Person(id, name, gender, age, phone, address)
+    {
+        this->organ = organ;
+        this->size = size;
+        this->blood = blood;
+        this->priority = priority;
+    }
+
+    string getOrgan() const
+    {
+        return organ;
+    }
+
+    string getSize() const
+    {
+        return size;
+    }
+
+    string getBlood() const
+    {
+        return blood;
+    }
+
+    int getPriority() const
+    {
+        return priority;
+    }
+
+    void update()
+    {
+        cout << "\nNew Name: ";
+        getline(cin, name);
+
+        cout << "New Phone: ";
+        getline(cin, phone);
+
+        cout << "New Address: ";
+        getline(cin, address);
+
+        cout << "New Age: ";
+        cin >> age;
+
+        cout << "Priority (1-Emergency, 2-High, 3-Normal): ";
+        cin >> priority;
+        clearInput();
+
+        if (priority < 1 || priority > 3)
+            priority = 3;
+
+        cout << "Recipient updated.\n";
+    }
+
+    void display() const override
+    {
+        cout << "\n--------------------------------\n";
+        cout << "Recipient ID  : " << id << '\n';
+        cout << "Name          : " << name << '\n';
+        cout << "Gender        : " << gender << '\n';
+        cout << "Age           : " << age << '\n';
+        cout << "Phone         : " << phone << '\n';
+        cout << "Address       : " << address << '\n';
+        cout << "Required Organ: " << organ << '\n';
+        cout << "Organ Size    : " << size << '\n';
+        cout << "Blood Group   : " << blood << '\n';
+        cout << "Priority      : ";
+
+        if (priority == 1)
+            cout << "Emergency";
+        else if (priority == 2)
+            cout << "High";
+        else
+            cout << "Normal";
+
+        cout << "\n--------------------------------\n";
+    }
+};
+
+#endif
